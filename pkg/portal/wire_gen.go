@@ -132,10 +132,13 @@ func newAdminAPIHandler(p *deps.RequestProvider) http.Handler {
 		ConfigSource:   configSource,
 		AuthzAdder:     adder,
 	}
+	factory := rootProvider.LoggerFactory
+	adminAPILogger := transport.NewAdminAPILogger(factory)
 	adminAPIHandler := &transport.AdminAPIHandler{
 		ConfigResolver:   adminAPIService,
 		EndpointResolver: adminAPIService,
 		AuthzAdder:       adminAPIService,
+		Logger:           adminAPILogger,
 	}
 	return adminAPIHandler
 }
